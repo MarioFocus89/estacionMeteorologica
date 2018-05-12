@@ -5,7 +5,7 @@
 #define gasSensorPin A0
 #define buzzerPin 10
 #define tempPin 2
-#define loopTime 2000
+#define loopTime 500
 #define gasLimitMed 150
 #define gasLimitHigh 500
 
@@ -20,34 +20,33 @@ void setup()
   pressure.startPressure(3);
   delay(50);
   Serial.begin(9600);
-  Serial.write("Metano\t\tTemperatura(C)\tHumedad(%)\tPresion(mbar)\n");  
+  //Serial.write("Metano\t\tTemperatura(C)\tHumedad(%)\tPresion(mbar)\n");  
 }
 
 void loop() 
 {
+  while(!Serial.available())
+    delay(loopTime);
+  Serial.read();
   switch(readMetane()){
     case 0:
-      Serial.write("BAJO\t\t");
+      Serial.write("BAJO,");
       break;
     case 1:
-      Serial.write("PRECAUCION!\t\t");
+      Serial.write("PRECAUCION!,");
       break;
     case 2:
-      Serial.write("PELIGRO!\t\t");
+      Serial.write("PELIGRO!,");
       break;
     default:
-      Serial.write("DESCONOCIDO");
+      Serial.write("DESCONOCIDO,");
       break;
   };
   double temperature = dht.readTemperature();
-  Serial.print(temperature); Serial.write("C\t\t");
-  Serial.print(dht.readHumidity()); Serial.write("%\t\t");
-  Serial.print(readPressure(temperature)); Serial.write("mbar");
-  Serial.write("\n");
-  delay(loopTime);
+  Serial.print(temperature); Serial.write(",");
+  Serial.print(dht.readHumidity()); Serial.write(",");
+  Serial.print(readPressure(temperature));
 }
-
-
 
 int readMetane(){
   int raw_adc = analogRead(gasSensorPin);
