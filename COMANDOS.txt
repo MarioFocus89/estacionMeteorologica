@@ -1,0 +1,5 @@
+git status --> Para ver el estado de las modificaciones
+git add . --> Añade los cambios para ser subidos al siguiente commit
+git commit -m "COMENTARIO" --> Junta los nuevos cambios con el resto del código
+git push origin master --> Sube todos los cambios a la nube de GitHub
+git pull origin master --> Descarga todos loscambios desde la nube de GitHub
