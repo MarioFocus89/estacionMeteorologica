@@ -28,20 +28,7 @@ void loop()
   while(!Serial.available())
     delay(loopTime);
   Serial.read();
-  switch(readMetane()){
-    case 0:
-      Serial.write("BAJO,");
-      break;
-    case 1:
-      Serial.write("PRECAUCION!,");
-      break;
-    case 2:
-      Serial.write("PELIGRO!,");
-      break;
-    default:
-      Serial.write("DESCONOCIDO,");
-      break;
-  };
+  Serial.print(readMetane()); Serial.write(",");
   double temperature = dht.readTemperature();
   Serial.print(temperature); Serial.write(",");
   Serial.print(dht.readHumidity()); Serial.write(",");
